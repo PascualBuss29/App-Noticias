@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="/fragments/head :: head"></head>
+
+    <body>
+
+        <nav th:replace="/fragments/navbar :: nav"></nav>
+
+        <header class="px-2 py-2 my- text-center">
+            <i class="bi bi-egg-fill fs-2"></i>
+            <h1 class="display-5 fw-bold">Periodistas de Egg News</h1>
+        </header>
+
+        <div class="container m-5">
+
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <!-- <th scope="col">Foto</th> -->
+                        <th class="text-center" scope="col">Nombre</th>
+                        <th scope="col" class="d-flex justify-content-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody th:each="periodista : ${periodistas}">
+                    <!--  -->
+                    <tr>
+                        <!-- <th scope="row">
+                            <img th:src="@{/imagen/periodista/__${periodista.id}__}" alt="mdo" width="32" height="32"
+                            class="rounded-circle m-3"/>
+                        </th> -->
+                        <td class="fs-5 align-middle text-center" th:text="${periodista.nombre}"></td>
+                        <td class="align-middle text-center" sec:authorize="hasAnyRole('ADMIN')">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <a class="btn btn-warning fs-5 mx-4 " sec:authorize="hasRole('ADMIN')" th:href="@{/admin/actualizarPeriodista/__${periodista.id}__}">Modificar</a>
+                                <a class="btn btn-danger fs-5 " sec:authorize="hasRole('ADMIN')" th:href="@{/eliminar/__${periodista.id}__}">Eliminar</a>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer th:replace="/fragments/footer :: footer"></footer>
+
+        <!-- Código JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    </body>
+
+</html>

@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Fourth navbar example">
+    <div class="container-fluid">
+
+        <a th:href="@{/inicio}" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <i class="bi bi-egg-fill m-3 text-warning fs-2"></i>
+        </a>
+        <a class="navbar-brand" th:href="@{/inicio}">EGG NEWS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
+                aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample04">
+
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item" th:if="${session.usuariosession != null}">
+                    <a class="nav-link active" aria-current="page" th:href="@{/noticia/lista}">Noticias</a>
+                </li>
+                <li class="nav-item dropdown text-white" th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('PER', 'ADMIN')">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Menú
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('PER', 'ADMIN')"><a
+                                class="dropdown-item" th:href="@{/noticia/escribir-noticia}">Redactar Noticia</a></li>
+                        <li>
+
+                        <li th:if="${session.usuariosession != null}" sec:authorize="hasAnyRole('PER', 'ADMIN')"><a
+                                class="dropdown-item" th:href="@{/admin/registro-periodista}">Crear Periodista</a></li>
+                        <li sec:authorize="hasAnyRole('PER', 'ADMIN')">
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li th:if="${session.usuariosession != null}"
+                            sec:authorize="hasAnyRole('USER', 'PER', 'ADMIN')"><a class="dropdown-item"
+                                                                              th:href="@{/admin/lista-periodistas}">Periodistas</a></li>
+                        <li th:if="${session.usuariosession != null}" sec:authorize="hasRole('ADMIN')"><a
+                                <li th:if="${session.usuariosession != null}"
+                                sec:authorize="hasAnyRole('USER', 'PER', 'ADMIN')"><a class="dropdown-item"
+                                                                                      th:href="@{/admin/usuarios}">Usuarios</a></li>
+                                <li th:if="${session.usuariosession != null}" sec:authorize="hasRole('ADMIN')"><a
+
+                            </li>
+                </ul>
+            </li>
+        </ul>
+
+        <!-- <form role="search" th:if="${session.usuariosession != null}">
+            <input class="form-control" type="search" placeholder="Buscar..." aria-label="Search">
+        </form> -->
+
+        <div class="text-end m-3 mr-2" th:if="${session.usuariosession == null}">
+            <a th:href="@{/login}"><button type="button" class="btn btn-outline-light me-2">Iniciar
+                    Sesión</button></a>
+            <a th:href="@{/registrar}"><button type="button" class="btn btn-warning me-2">Registrarse</button></a>
+        </div>
+
+        <div class="dropdown text-end" th:if="${session.usuariosession != null}">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+               aria-expanded="false">
+                <img th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="mdo" width="42" height="42"
+                     class="rounded-circle m-1">
+            </a>
+            <ul class="dropdown-menu text-small">
+                <li><a class="dropdown-item" th:href="@{/perfil/__${session.usuariosession.id}__}">Editar Perfil</a>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" th:href="@{/logout}">Cerrar Sesión</a></li>
+            </ul>
+        </div>
+
+        <div sec:authorize="hasAnyRole('USER', 'PER', 'ADMIN')" class="badge bg-warning text-wrap" style="width: 6rem;">
+            <h5 class="text-dark" th:if="${session.usuariosession != null}"
+                th:text="'Hola, ' + ${session.usuariosession.nombre} + '!'"></h5>
+        </div>
+
+    </div>
+</div>
+</nav>
